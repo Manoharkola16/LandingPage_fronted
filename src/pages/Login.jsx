@@ -21,7 +21,7 @@ const Login = () => {
     <div
       className="h-screen w-full flex items-center justify-center bg-cover bg-center relative bg-[url('restaurant.jpg')]"
     >
-      {/* <div className="absolute inset-0 backdrop-blur-sm bg-black/40"></div> */}
+      <div className="absolute inset-0  bg-black/40"></div>
       <div className="relative bg-white/90 p-8 rounded-xl shadow-lg w-80">
         <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
 
