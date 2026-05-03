@@ -3,7 +3,7 @@ import { useCart } from "./CartContext";
 
 const Features = () => {
 
-  // ✅ Food Data
+
   const foods = [
     { name: "Fish Curry", price: 500, img: "/fish.webp" },
     { name: "Mutton Curry", price: 700, img: "/mutton.avif" },
@@ -16,7 +16,7 @@ const Features = () => {
     { name: "Chicken Curry", price: 400, img: "/chicken.webp" },
   ];
 
-  // ✅ useState for counts
+
   const [counts, setCounts] = useState(Array(foods.length).fill(0));
 
   // ✅ Cart functions
@@ -49,30 +49,27 @@ const Features = () => {
       {foods.map((item, index) => (
         <div key={index} className="p-6 shadow-md rounded-xl">
 
-          {/* Image */}
+        
           <img
             src={item.img}
             alt={item.name}
             className="w-60 h-40 object-cover rounded-lg mb-4 mx-auto transform transition duration-300 hover:scale-110"
           />
 
-          {/* Title */}
           <h2 className="text-xl font-semibold">{item.name}</h2>
 
-          {/* Description */}
+  
           <p className="text-sm">
             Delicious and freshly prepared dish just for you.
           </p>
-
-          {/* Price + Counter */}
           <div className="flex justify-between items-center mt-4">
 
-            {/* Price */}
+    
             <span className="text-lg font-bold text-green-600">
               ₹ {item.price}
             </span>
 
-            {/* Counter */}
+
             <div className="flex items-center gap-3">
 
               <button
