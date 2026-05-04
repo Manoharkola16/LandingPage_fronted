@@ -8,7 +8,7 @@ const BottomCart = () => {
   if (totalItems === 0) return null;
 
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-[95%] sm:w-[400px] bg-amber-200 text-black p-4 rounded-2xl flex justify-between items-center shadow-lg">
+    <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 w-[95%] sm:w-[400px] bg-amber-200 text-black p-4 rounded-2xl flex justify-between items-center shadow-lg">
       
       <div className="text-sm sm:text-base">
         <p className="font-bold">{totalItems} Items</p>

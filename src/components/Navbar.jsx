@@ -1,20 +1,17 @@
-import { useCart } from "./CartContext";
 import { useState } from "react";
+import { useCart } from "./CartContext";
 
-const Navbar = () => {
+const Navbar = ({ search, setSearch }) => {
   const { cart, totalAmount, totalItems } = useCart();
-  const [open, setOpen] = useState(false);
-  const [explore, setExplore] = useState(false);
+  const [open , setOpen] = useState()
 
   return (
-    <nav className="px-4 sm:px-6 py-4 bg-gray-900 text-white flex flex-wrap justify-between items-center">
+    <nav className="fixed w-full px-4 sm:px-6 py-4 bg-gray-900 text-white flex flex-wrap justify-between items-center z-50">
 
       {/* LEFT SIDE */}
       <div className="flex items-center gap-4">
-        <h1 className="text-lg sm:text-xl font-bold">MyKitchen</h1>
-        <div className="cursor-pointer hover:text-yellow-400 text-sm sm:text-base">
-          Home
-        </div>
+        <h1 className="text-lg sm:text-xl font-bold">My Kitchen</h1>
+        
       </div>
 
       {/* RIGHT SIDE */}
@@ -62,26 +59,6 @@ const Navbar = () => {
         <div className="font-bold text-green-400 text-sm sm:text-base">
           ₹ {totalAmount}
         </div>
-
-        {/* EXPLORE BUTTON */}
-        <button
-          onClick={() => setExplore(!explore)}
-          className="bg-blue-500 px-3 py-2 rounded-lg hover:bg-blue-600 text-sm sm:text-base"
-        >
-          Explore
-        </button>
-
-        {/* EXPLORE DROPDOWN */}
-        {explore && (
-          <div className="absolute right-0 top-14 w-60 bg-white text-black rounded-lg shadow-lg p-4 z-50">
-            <ul className="space-y-2 text-sm">
-              <li className="hover:text-blue-500 cursor-pointer">🍗 Chicken Curry - ₹250</li>
-              <li className="hover:text-blue-500 cursor-pointer">🐟 Fish Curry - ₹250</li>
-              <li className="hover:text-blue-500 cursor-pointer">🥩 Mutton Curry - ₹250</li>
-              <li className="hover:text-blue-500 cursor-pointer">🔥 Grilled Chicken - ₹250</li>
-            </ul>
-          </div>
-        )}
 
       </div>
     </nav>

@@ -5,14 +5,14 @@ const Features = () => {
 
 
   const foods = [
-    { name: "Fish Curry", price: 399, img: "/fish.webp" },
+    { name: "Fish Curry", price: 399,  img: "/fish.webp" },
     { name: "Mutton Curry", price: 599, img: "/mutton.avif" },
     { name: "Chicken Curry", price: 299, img: "/chicken.webp" },
      { name: "Prawns Fry", price: 499, img: "/src/assets/prawns.webp" },
     { name: " Chicken Noodles", price: 349, img: "/src/assets/noodles.webp" },
     { name: "Chicken LollyPop", price: 299, img: "/src/assets/lollypop.webp" },
     { name: "Grilled Chicken", price: 549, img: "/src/assets/grill chicken.png" },
-    { name: "White  Pasta", price: 299, img: "/src/assets/pasta.png" },
+    { name: "White  Pasta", price: 299, category: "Veg", img: "/src/assets/pasta.png" },
     { name: "Paneer Tikka", price: 249, img: "/src/assets/paneer.png" },
    { name: "Chease-Pizza", price: 199, img: "/src/assets/pizza.png" },
     { name: "Veg-Manchurian", price: 149, img: "/src/assets/manchuria.webp" },
@@ -23,25 +23,40 @@ const Features = () => {
     { name: "Green Apple-Moktail", price: 199, img: "/src/assets/green apple.png" },
     { name: "Red Berry-Moktail", price: 249, img: "/src/assets/red berry.png" },
     { name: "Topical-Moktail", price: 199, img: "/src/assets/topicol.png" },
-
+    { name: "Paneer Burger", price: 149, category: "Burger", img: "/src/assets/paneerBurger.jpg" },
+    { name: "Chicken Cheesy Burger", price: 349, category: "Burger", img: "/src/assets/cheesyBurger.jpg" },
+    { name: "Chicken Grilled", price: 249, category: "Burger", img: "/src/assets/grillChickenBurger.jpg" },
+    { name: "Chicken Tikka", price: 249, category: "Burger", img: "/src/assets/chickenTikkaBurger.jpg" },
+    { name: "Veg Grilled Sandwitch", price: 299, category: "Sandwitches", img: "/src/assets/vegGrilled.jpg" },
+    { name: "Paneer Sandwitch", price: 299, category: "Sandwitches", img: "/src/assets/paneerSandiwch.webp" },
+    { name: "Chicken Sandwitch", price: 349, category: "Sandwitches", img: "/src/assets/grillChickenSandwitch.jpg" },
+    { name: "Chicken Tandhori Sandwitch", price: 339, category: "Sandwitches", img: "/src/assets/tandhoorichicken.jpg" },
+    { name: "Chicken Tikka sandwitch", price: 299, category: "Sandwitches", img: "/src/assets/pngtree-grilled-chicken-sandwich.png" },
+     { name: "Oreo Milkshake", price: 149, category: "Milkshakes", img: "/src/assets/oreo.png" },
+    { name: "Mango Milkshake", price: 199, category: "Milkshakes", img: "/src/assets/mango.png" },
+    { name: "Kit-Kat Milkshake ", price: 199, category: "Milkshakes", img: "/src/assets/kitkat.png" },
+    { name: "Venilaa Milkkshake", price: 149, category: "Milkshakes", img: "/src/assets/vanila.jpg" },
+    { name: "Strabwerry Milkshake", price: 249, category: "Milkshakes", img: "/src/assets/straberry.jpg" },
+     { name: "Apricoit Delight", price: 199, category: "Desserts", img: "/src/assets/apricoit.webp" },
+    { name: "Mango Delight", price: 149, category: "Desserts", img: "/src/assets/mangodelight.webp" },
+    { name: "Khubhani ka Metha ", price: 149, category: "Desserts", img: "/src/assets/khubani.jpg" },
+    { name: "Double ka Metha", price: 149, category: "Desserts", img: "/src/assets/doubleKaMetha.webp" },
+    
   ];
 
 
   const [counts, setCounts] = useState(Array(foods.length).fill(0));
 
-  // ✅ Cart functions
   const { addToCart, removeFromCart } = useCart();
 
-  // ✅ Increase count
   const increase = (index, item) => {
     const updated = [...counts];
     updated[index] += 1;
     setCounts(updated);
 
-    addToCart(item); // also update cart
+    addToCart(item); 
   };
 
-  // ✅ Decrease count
   const decrease = (index, item) => {
     const updated = [...counts];
 
@@ -49,7 +64,7 @@ const Features = () => {
       updated[index] -= 1;
       setCounts(updated);
 
-      removeFromCart(item); // also update cart
+      removeFromCart(item); 
     }
   };
 
