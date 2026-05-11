@@ -6,7 +6,7 @@ import burger from "../assets/burger.jpg";
 import pizza from "../assets/pizzasssss.jpg";
 import milkshakes from "../assets/milkshakes.jpg";
 import sandwich from "../assets/sandwitch.png";
-import Allfood from '../assets/Allfood.png'
+import Allfood from '../assets/allfood.png'
 
 const categories = [
   {name : "All" , img : Allfood},
