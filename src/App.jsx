@@ -8,8 +8,12 @@ import CartPage from "./components/CartPage";
 // import Categories from "./components/Categories";
 // import CategoryPage from "./components/CategoryPage";
 import foods from './data/FoodsData'
+import { useState } from "react";
+import Account from "./components/Account";
 
 function App() {
+ 
+const [search, setSearch] = useState("");
   return (
    <CartProvider>
      <BrowserRouter>
@@ -18,6 +22,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/cart" element={<CartPage></CartPage>}></Route>
+         <Route path="/account" element={<Account />} />
           {/* <Route path="/categories" element={<Categories foods={foods} />} /> */}
        {/* <Route path="/category/:type" element={<CategoryPage foods={foods} />} /> */}
       </Routes>

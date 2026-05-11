@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useCart } from "./CartContext";
 import foods from "../data/FoodsData";
 import categories from "../data/CategoriesFood";
+import { Search } from 'lucide-react';
 
-const Features = () => {
+const Features = ({search}) => {
   const {
   cart,
   addToCart,
@@ -14,11 +15,21 @@ const Features = () => {
   // Selected category state
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // Filter foods
-  const filteredFoods =
-    selectedCategory === "All"
-      ? foods
-      : foods.filter((item) => item.category === selectedCategory);
+  const filteredFoods = foods.filter((item) => {
+
+  // CATEGORY FILTER
+  const matchesCategory =
+    selectedCategory === "All" ||
+    item.category === selectedCategory;
+
+  // SEARCH FILTER
+  const matchesSearch =
+    item.name
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+  return matchesCategory && matchesSearch;
+});
 
   return (
     <>
@@ -116,6 +127,12 @@ const Features = () => {
             </div>
           );
         })}
+
+        {filteredFoods.length === 0 && (
+        <p className="text-center text-xl font-semibold col-span-full">
+          No food items found 🍔
+        </p>
+        )}
 
       </section>
     </>

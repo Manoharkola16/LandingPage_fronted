@@ -5,14 +5,21 @@ import Testimonials from "../components/Testimonials";
 import CTA from "../components/CTA";
 import Footer from "../components/Footer";
 import BottomCart from "../components/BottomCart";
+import { useState } from "react";
 // import BottomNavbar from "../components/BottonNavbar";
 
 const Home = () => {
+
+  const [search,setSearch]=useState("");
   return (
     <>
-      <Navbar />
+      <Navbar   search={search}
+        setSearch={setSearch}
+        />
       <Hero />
-      <Features />
+      <Features  
+      search={search} 
+       />
       <Testimonials />
       <CTA />
       <Footer />

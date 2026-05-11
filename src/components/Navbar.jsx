@@ -23,6 +23,7 @@ const Navbar = ({ search, setSearch }) => {
 
          {/* SEARCH BAR */}
         <div className="flex items-center bg-white rounded-lg px-2 py-1">
+          
           <Search size={18} className="text-gray-500" />
 
           <input

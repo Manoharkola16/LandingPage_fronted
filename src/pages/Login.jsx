@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import '../../public/restaurant.jpg'
+import restaurant from '../assets/restaurant.jpg'
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +19,12 @@ const Login = () => {
 
   return (
     <div
-      className="h-screen w-full flex items-center justify-center bg-cover bg-center relative bg-[url('restaurant.jpg')]"
+      className="h-screen w-full flex items-center justify-center bg-cover bg-center relative"
+          
+      style={{
+          backgroundImage: `url(${restaurant})`,
+        }}
+
     >
       <div className="absolute inset-0  bg-black/40"></div>
       <div className="relative bg-white/90 p-8 rounded-xl shadow-lg w-80">
