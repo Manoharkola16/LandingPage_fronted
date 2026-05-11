@@ -1,42 +1,141 @@
 import { useCart } from "./CartContext";
 import { useNavigate } from "react-router-dom";
-import chickenthandhoori from '../assets/chickentandhori.png'
-import chocolatedessert from '../assets/chocolatedessert.jpg'
-import sambarRice from '../assets/sambarRice.png'
-import rayalaseemaprawns from '../assets/rayalaseemaprawns.webp'
-import gunturChicken from '../assets/gunturchicken.webp'
-import crabs from '../assets/crabs.png'
-import FishFry from '../assets/tunaFish.jpg'
-import restaurantpic from '../assets/restaurantpic.png'
+import chickenthandhoori from "../assets/chickentandhori.png";
+import chocolatedessert from "../assets/chocolatedessert.jpg";
+import sambarRice from "../assets/sambarRice.png";
+import rayalaseemaprawns from "../assets/rayalaseemaprawns.webp";
+import gunturChicken from "../assets/gunturchicken.webp";
+import crabs from "../assets/crabs.png";
+import FishFry from "../assets/tunaFish.jpg";
+import restaurantpic from "../assets/restaurantpic.png";
+
 import {
   ShoppingBag,
   TicketPercent,
   Bike,
   NotebookPen,
 } from "lucide-react";
+
 import { useState } from "react";
 
 const CartPage = () => {
-  const { cart, totalAmount, clearCart } = useCart();
+  const {
+    cart,
+    totalAmount,
+    clearCart,
+    addToCart,
+    increaseQty,
+    decreaseQty,
+  } = useCart();
+
+
+   const [coupon, setCoupon] = useState("");
+   const [discount, setDiscount] = useState(0);
+   const [couponMessage, setCouponMessage] = useState("");
+
+
+   const [selectedDelivery, setSelectedDelivery] =
+  useState("Standard");
+
+const [tipAmount, setTipAmount] =
+  useState(0);
+
+const [selectedInstruction, setSelectedInstruction] =
+  useState("");
+
   const navigate = useNavigate();
+
+  const [activeTab, setActiveTab] =
+    useState("delivery");
 
   const deliveryFee = 30;
   const gst = 20;
 
-  const grandTotal = totalAmount + deliveryFee + gst;
+ const grandTotal =
+  totalAmount +
+  deliveryFee +
+  gst +
+  tipAmount -
+  discount;
 
   const handleOrder = () => {
     alert("🎉 Order Placed Successfully!");
 
     clearCart();
+
     navigate("/Home");
   };
 
-  const [activeTab, setActiveTab] = useState("delivery");
+const applyCoupon = () => {
+
+  if (coupon === "FLAT100") {
+    setDiscount(100);
+    setCouponMessage("✅ FLAT100 Applied");
+  }
+
+  else if (coupon === "SAVE50") {
+    setDiscount(50);
+    setCouponMessage("✅ SAVE50 Applied");
+  }
+
+  else if (coupon === "FREEDEL") {
+    setDiscount(deliveryFee);
+    setCouponMessage("✅ Free Delivery Applied");
+  }
+
+  else {
+    setDiscount(0);
+    setCouponMessage("❌ Invalid Coupon");
+  }
+};
+
+  // COMPLETE MEAL ITEMS
+  const mealItems = [
+    {
+      name: "Chicken Tandoori",
+      price: 150,
+      oldPrice: 200,
+      img: chickenthandhoori,
+    },
+    {
+      name: "Rayala seema prawns",
+      price: 190,
+      oldPrice: 290,
+      img: rayalaseemaprawns,
+    },
+    {
+      name: "Guntur Chicken",
+      price: 200,
+      oldPrice: 290,
+      img: gunturChicken,
+    },
+    {
+      name: "Crabs Fry",
+      price: 140,
+      oldPrice: 199,
+      img: crabs,
+    },
+    {
+      name: "Fish Fry",
+      price: 190,
+      oldPrice: 290,
+      img: FishFry,
+    },
+    {
+      name: "Chocolate Dessert",
+      price: 299,
+      oldPrice: 350,
+      img: chocolatedessert,
+    },
+    {
+      name: "Sambar Rice",
+      price: 149,
+      oldPrice: 199,
+      img: sambarRice,
+    },
+  ];
 
   return (
-    <>
-    
     <div className="bg-gray-100 min-h-screen pb-32">
 
       {/* TOP SECTION */}
@@ -44,19 +143,21 @@ const CartPage = () => {
 
         <div>
           <h1 className="text-2xl font-bold">
-          My Kitchen
-        </h1>
+            My Kitchen
+          </h1>
 
-        <h3 className="text-gray-600 text-sm mt-1">
-          Delivery in 25-30 mins
-        </h3>
+          <h3 className="text-gray-600 text-sm mt-1">
+            Delivery in 25-30 mins
+          </h3>
 
-        <h3>
-       📍location
-        </h3>
-        </div >
+          <h3>📍Location</h3>
+        </div>
 
-        <img src={restaurantpic} alt="" className="h-25 w-25  " />
+        <img
+          src={restaurantpic}
+          alt=""
+          className="h-25 w-25"
+        />
       </div>
 
       {/* CART ITEMS */}
@@ -75,7 +176,7 @@ const CartPage = () => {
               {cart.map((item, index) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center mb-5"
+                  className="flex justify-between items-center mb-5 border-b pb-3"
                 >
                   <div>
                     <h3 className="font-semibold">
@@ -83,13 +184,39 @@ const CartPage = () => {
                     </h3>
 
                     <p className="text-gray-500 text-sm">
-                      Qty: {item.qty}
+                      ₹{item.price} each
                     </p>
                   </div>
 
-                  <p className="font-bold">
-                    ₹{item.price * item.qty}
-                  </p>
+                  <div className="flex items-center gap-3">
+
+                    <button
+                      onClick={() =>
+                        decreaseQty(item.name)
+                      }
+                      className=" text-black w-8 h-8 rounded-full text-xl"
+                    >
+                      -
+                    </button>
+
+                    <span className="font-bold">
+                      {item.qty}
+                    </span>
+
+                    <button
+                      onClick={() =>
+                        increaseQty(item.name)
+                      }
+                      className=" text-black w-8 h-8 rounded-full text-xl"
+                    >
+                      +
+                    </button>
+
+                    <p className="font-bold w-16 text-right">
+                      ₹
+                      {item.price * item.qty}
+                    </p>
+                  </div>
                 </div>
               ))}
 
@@ -97,7 +224,9 @@ const CartPage = () => {
               <div className="flex gap-3 mt-6">
 
                 <button
-                  onClick={() => navigate("/Home")}
+                  onClick={() =>
+                    navigate("/Home")
+                  }
                   className="flex items-center gap-2 border px-4 py-3 rounded-xl w-full"
                 >
                   <ShoppingBag size={18} />
@@ -114,440 +243,390 @@ const CartPage = () => {
           )}
         </div>
 
-          {/* SURPRISE DEALS */}
-<div className="bg-white rounded-3xl p-4 mt-4 shadow-sm">
-
-  {/* TOP */}
-  <div className="flex justify-between items-center mb-4">
-
-    <h2 className="text-pink-500 font-extrabold tracking-wide text-lg">
-      COMPLETE YOUR MEAL ✨
-    </h2>
-
-  </div>
-
-  {/* DEAL ITEMS */}
-  <div className="flex gap-4 overflow-x-auto scrollbar-hide">
-
-    {/* ITEM 1 */}
-    <div className="min-w-[140px] relative">
-
-      <img
-        src={chickenthandhoori}
-        alt=""
-        className="w-25 h-25 object-cover rounded-2xl"
-      />
-
-      <button className="absolute top-2 right-2 bg-white shadow-md w-9 h-9 rounded-xl text-green-600 text-2xl font-bold">
-        +
-      </button>
-
-      <h3 className="font-semibold mt-2 text-sm">
-        Chicken Tandoori
-      </h3>
-
-      <p className="text-pink-500 text-sm font-bold">
-        Price Drop
-      </p>
-
-      <div className="flex gap-2 items-center">
-        <span className="line-through text-gray-400">
-          ₹200
-        </span>
-
-        <span className="font-bold">
-          ₹150
-        </span>
-      </div>
-
-    </div>
-
-  {/* Item 2 */}
-    <div className="min-w-[140px] relative">
-
-      <img
-        src={rayalaseemaprawns}
-        alt=""
-        className="w-25 h-25 object-cover rounded-2xl"
-      />
-
-      <button className="absolute top-2 right-2 bg-white shadow-md w-9 h-9 rounded-xl text-green-600 text-2xl font-bold">
-        +
-      </button>
-
-      <h3 className="font-semibold mt-2 text-sm">
-        Rayala seema prawns
-      </h3>
-
-      <p className="text-pink-500 text-sm font-bold">
-        Price Drop
-      </p>
-
-      <div className="flex gap-2 items-center">
-        <span className="line-through text-gray-400">
-          ₹290
-        </span>
-
-        <span className="font-bold">
-          ₹190
-        </span>
-      </div>
-
-    </div>
-
-    {/* item3 */}
-
-    <div className="min-w-[140px] relative">
-
-      <img
-        src={gunturChicken}
-        alt=""
-        className="w-25 h-25 object-cover rounded-2xl"
-      />
-
-      <button className="absolute top-2 right-2 bg-white shadow-md w-9 h-9 rounded-xl text-green-600 text-2xl font-bold">
-        +
-      </button>
-
-      <h3 className="font-semibold mt-2 text-sm">
-        Guntur Chicken
-      </h3>
-
-      <p className="text-pink-500 text-sm font-bold">
-        Price Drop
-      </p>
-
-      <div className="flex gap-2 items-center">
-        <span className="line-through text-gray-400">
-          ₹290
-        </span>
-
-        <span className="font-bold">
-          ₹200
-        </span>
-      </div>
-
-    </div>
-
-    {/* item 4 */}
-
-    <div className="min-w-[140px] relative">
-
-      <img
-        src={crabs}
-        alt=""
-        className="w-25 h-25 object-cover rounded-2xl"
-      />
-
-      <button className="absolute top-2 right-2 bg-white shadow-md w-9 h-9 rounded-xl text-green-600 text-2xl font-bold">
-        +
-      </button>
-
-      <h3 className="font-semibold mt-2 text-sm">
-        Crabs Fry
-      </h3>
-
-      <p className="text-pink-500 text-sm font-bold">
-        Price Drop
-      </p>
-
-      <div className="flex gap-2 items-center">
-        <span className="line-through text-gray-400">
-          ₹199
-        </span>
-
-        <span className="font-bold">
-          ₹140
-        </span>
-      </div>
-
-    </div>
-
-
-{/* item5 */}
-    <div className="min-w-[140px] relative">
-
-      <img
-        src={FishFry}
-        alt=""
-        className="w-25 h-25 object-cover rounded-2xl"
-      />
-
-      <button className="absolute top-2 right-2 bg-white shadow-md w-9 h-9 rounded-xl text-green-600 text-2xl font-bold">
-        +
-      </button>
-
-      <h3 className="font-semibold mt-2 text-sm">
-        Fish Fry
-      </h3>
-
-      <p className="text-pink-500 text-sm font-bold">
-        Price Drop
-      </p>
-
-      <div className="flex gap-2 items-center">
-        <span className="line-through text-gray-400">
-          ₹290
-        </span>
-
-        <span className="font-bold">
-          ₹190
-        </span>
-      </div>
-
-    </div>
-
-    {/* ITEM 6*/}
-    <div className="min-w-[140px] relative">
-
-      <img
-        src={chocolatedessert}
-        alt=""
-        className="w-25 h-25 object-cover rounded-2xl"
-      />
-
-      <button className="absolute top-2 right-2 bg-white shadow-md w-9 h-9 rounded-xl text-green-600 text-2xl font-bold">
-        +
-      </button>
-
-      <h3 className="font-semibold mt-2 text-sm">
-        Chocolate Dessert
-      </h3>
-
-      <p className="text-pink-500 text-sm font-bold">
-        Price Drop
-      </p>
-
-      <div className="flex gap-2 items-center">
-        <span className="line-through text-gray-400">
-          ₹350
-        </span>
-
-        <span className="font-bold">
-          ₹299
-        </span>
-      </div>
-
-    </div>
-
-    {/* ITEM 4 */}
-    <div className="min-w-[140px] relative">
-
-      <img
-        src={sambarRice}
-        alt=""
-        className="w-25 h-25 object-cover rounded-2xl"
-      />
-
-      <button className="absolute top-2 right-2 bg-white shadow-md w-9 h-9 rounded-xl text-green-600 text-2xl font-bold">
-        +
-      </button>
-
-      <h3 className="font-semibold mt-2 text-sm">
-        Sambar Rice
-      </h3>
-
-      <p className="text-pink-500 text-sm font-bold">
-        Price Drop
-      </p>
-
-      <div className="flex gap-2 items-center">
-        <span className="line-through text-gray-400">
-          ₹199
-        </span>
-
-        <span className="font-bold">
-          ₹149
-        </span>
-      </div>
-
-    </div>
-
-  </div>
-</div>
-
-        {/* COUPON SECTION */}
-        <div className="bg-white rounded-2xl p-4 mt-4 shadow-sm">
-
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-
-              <TicketPercent className="text-orange-500" />
-
-              <div>
-                <h3 className="font-semibold">
-                  Apply Coupon
+        {/* COMPLETE YOUR MEAL */}
+        <div className="bg-white rounded-3xl p-4 mt-4 shadow-sm">
+
+          <h2 className="text-pink-500 font-extrabold tracking-wide text-lg mb-4">
+            COMPLETE YOUR MEAL ✨
+          </h2>
+
+          <div className="flex gap-4 overflow-x-auto scrollbar-hide">
+
+            {mealItems.map((item, index) => (
+
+              <div
+                key={index}
+                className="min-w-[140px] relative"
+              >
+
+                <img
+                  src={item.img}
+                  alt=""
+                  className="w-25 h-25 object-cover rounded-2xl"
+                />
+
+                <button
+                  onClick={() =>
+                    addToCart(item)
+                  }
+                  className="absolute top-2 right-2 bg-white shadow-md w-9 h-9 rounded-xl text-green-600 text-2xl font-bold"
+                >
+                  +
+                </button>
+
+                <h3 className="font-semibold mt-2 text-sm">
+                  {item.name}
                 </h3>
 
-                <p className="text-sm text-gray-500">
-                  Save more on your order
+                <p className="text-pink-500 text-sm font-bold">
+                  Price Drop
                 </p>
-              </div>
-            </div>
 
-            <button className="text-green-600 font-bold">
-              Apply
-            </button>
+                <div className="flex gap-2 items-center">
+
+                  <span className="line-through text-gray-400">
+                    ₹{item.oldPrice}
+                  </span>
+
+                  <span className="font-bold">
+                    ₹{item.price}
+                  </span>
+
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* BILL DETAILS */}
-        <div className="bg-amber-200 rounded-2xl p-4 mt-4 shadow-sm">
+      {/* COUPON SECTION */}
+<div className="bg-white rounded-2xl p-4 mt-4 shadow-sm">
 
-          {/* DELIVERY / TIP / INSTRUCTIONS */}
-<div className="bg-white rounded-3xl p-4 mt-4 shadow-sm">
+  <div className="flex gap-3">
 
-  {/* TABS */}
-  <div className="bg-gray-100 rounded-full flex justify-between p-1">
-
-    <button
-      onClick={() => setActiveTab("delivery")}
-      className={`flex-1 py-3 rounded-full font-semibold transition ${
-        activeTab === "delivery"
-          ? "bg-black text-white"
-          : "text-black"
-      }`}
-    >
-      Delivery Type
-    </button>
+    <input
+      type="text"
+      placeholder="Enter Coupon Code"
+      value={coupon}
+      onChange={(e) =>
+        setCoupon(e.target.value.toUpperCase())
+      }
+      className="border w-full p-3 rounded-xl outline-none"
+    />
 
     <button
-      onClick={() => setActiveTab("tip")}
-      className={`flex-1 py-3 rounded-full font-semibold transition ${
-        activeTab === "tip"
-          ? "bg-black text-white"
-          : "text-black"
-      }`}
+      onClick={applyCoupon}
+      className="bg-green-500 text-white px-5 rounded-xl hover:bg-green-700"
     >
-      Tip
-    </button>
-
-    <button
-      onClick={() => setActiveTab("instructions")}
-      className={`flex-1 py-3 rounded-full font-semibold transition ${
-        activeTab === "instructions"
-          ? "bg-black text-white"
-          : "text-black"
-      }`}
-    >
-      Instructions
+      Apply
     </button>
 
   </div>
 
-  {/* DELIVERY TAB */}
-  {activeTab === "delivery" && (
-    <div className="mt-5 space-y-4">
-
-      <div className="border rounded-2xl p-4 flex justify-between items-center">
-
-        <div>
-          <h3 className="font-bold text-orange-500">
-            Standard
-          </h3>
-
-          <p className="text-sm text-gray-500">
-            Fast delivery
-          </p>
-        </div>
-
-        <p className="font-bold">
-          35-45 mins
-        </p>
-      </div>
-
-      <div className="border rounded-2xl p-4 flex justify-between items-center">
-
-        <div>
-          <h3 className="font-bold">
-            Eco Saver
-          </h3>
-
-          <p className="text-sm text-gray-500">
-            Save environment
-          </p>
-        </div>
-
-        <p className="font-bold">
-          40-50 mins
-        </p>
-      </div>
-
-    </div>
+  {/* MESSAGE */}
+  {couponMessage && (
+    <p className="mt-3 font-semibold text-sm">
+      {couponMessage}
+    </p>
   )}
 
-  {/* TIP TAB */}
-  {activeTab === "tip" && (
-    <div className="mt-5">
+  {/* AVAILABLE COUPONS */}
+  <div className="mt-4 text-sm text-gray-600">
 
-      <p className="text-gray-600 mb-5">
-        Thank your delivery partner with a tip ❤️
-      </p>
+    <p className="font-bold mb-2">
+      Available Coupons
+    </p>
 
-      <div className="grid grid-cols-4 gap-3">
+    <div className="flex flex-wrap gap-2">
 
-        <button className="border rounded-xl py-4 font-bold">
-          ₹20
-        </button>
+      <span className="bg-gray-100 px-3 py-2 rounded-lg">
+        FLAT100
+      </span>
 
-        <button className="border-2 border-orange-500 rounded-xl py-4 font-bold text-orange-500">
-          ₹30
-        </button>
+      <span className="bg-gray-100 px-3 py-2 rounded-lg">
+        SAVE50
+      </span>
 
-        <button className="border rounded-xl py-4 font-bold">
-          ₹50
-        </button>
-
-        <button className="border rounded-xl py-4 font-bold">
-          Other
-        </button>
-
-      </div>
+      <span className="bg-gray-100 px-3 py-2 rounded-lg">
+        FREEDEL
+      </span>
 
     </div>
-  )}
-
-  {/* INSTRUCTIONS TAB */}
-  {activeTab === "instructions" && (
-    <div className="mt-5 overflow-x-auto">
-
-      <div className="flex gap-4 min-w-max">
-
-        <div className="border rounded-2xl p-4 w-32 text-center">
-          <p className="text-3xl mb-2">📞</p>
-          <p>Avoid Calling</p>
-        </div>
-
-        <div className="border rounded-2xl p-4 w-32 text-center">
-          <p className="text-3xl mb-2">🚪</p>
-          <p>Leave at Door</p>
-        </div>
-
-        <div className="border rounded-2xl p-4 w-32 text-center">
-          <p className="text-3xl mb-2">🔕</p>
-          <p>Don't Ring Bell</p>
-        </div>
-
-        <div className="border rounded-2xl p-4 w-32 text-center">
-          <p className="text-3xl mb-2">🥄</p>
-          <p>Extra Spoons</p>
-        </div>
-
-      </div>
-
-    </div>
-  )}
+  </div>
 
 </div>
+
+        {/* DELIVERY / TIP / INSTRUCTIONS */}
+        <div className="bg-white rounded-3xl p-4 mt-4 shadow-sm">
+
+          <div className="bg-gray-100 rounded-full flex justify-between p-1">
+
+            <button
+              onClick={() =>
+                setActiveTab("delivery")
+              }
+              className={`flex-1 py-3 rounded-full font-semibold ${
+                activeTab === "delivery"
+                  ? "bg-black text-white"
+                  : ""
+              }`}
+            >
+              Delivery
+            </button>
+
+            <button
+              onClick={() =>
+                setActiveTab("tip")
+              }
+              className={`flex-1 py-3 rounded-full font-semibold ${
+                activeTab === "tip"
+                  ? "bg-black text-white"
+                  : ""
+              }`}
+            >
+              Tip
+            </button>
+
+            <button
+              onClick={() =>
+                setActiveTab("instructions")
+              }
+              className={`flex-1 py-3 rounded-full font-semibold ${
+                activeTab ===
+                "instructions"
+                  ? "bg-black text-white"
+                  : ""
+              }`}
+            >
+              Instructions
+            </button>
+          </div>
+
+        {/* DELIVERY TAB */}
+{activeTab === "delivery" && (
+  <div className="mt-5 space-y-4">
+
+    {/* STANDARD */}
+    <div
+      onClick={() =>
+        setSelectedDelivery("Standard")
+      }
+      className={`border rounded-2xl p-4 flex justify-between items-center cursor-pointer transition ${
+        selectedDelivery === "Standard"
+          ? "border-orange-500 bg-orange-50"
+          : ""
+      }`}
+    >
+
+      <div>
+        <h3 className="font-bold text-orange-500">
+          Standard
+        </h3>
+
+        <p className="text-sm text-gray-500">
+          Fast delivery
+        </p>
+      </div>
+
+      <p className="font-bold">
+        35-45 mins
+      </p>
+    </div>
+
+    {/* ECO SAVER */}
+    <div
+      onClick={() =>
+        setSelectedDelivery("Eco Saver")
+      }
+      className={`border rounded-2xl p-4 flex justify-between items-center cursor-pointer transition ${
+        selectedDelivery === "Eco Saver"
+          ? "border-green-500 bg-green-50"
+          : ""
+      }`}
+    >
+
+      <div>
+        <h3 className="font-bold">
+          Eco Saver
+        </h3>
+
+        <p className="text-sm text-gray-500">
+          Save environment
+        </p>
+      </div>
+
+      <p className="font-bold">
+        40-50 mins
+      </p>
+    </div>
+
+  </div>
+)}
+
+         {/* TIP TAB */}
+{activeTab === "tip" && (
+  <div className="mt-5">
+
+    <p className="text-gray-600 mb-5">
+      Thank your delivery partner ❤️
+    </p>
+
+    <div className="grid grid-cols-4 gap-3">
+
+      {[20, 30, 50, 100].map((tip) => (
+
+        <button
+          key={tip}
+          onClick={() =>
+            setTipAmount(tip)
+          }
+          className={`rounded-xl py-4 font-bold border transition ${
+            tipAmount === tip
+              ? "border-orange-500 text-orange-500 border-2"
+              : ""
+          }`}
+        >
+          ₹{tip}
+        </button>
+      ))}
+
+    </div>
+
+    {/* REMOVE TIP */}
+    {tipAmount > 0 && (
+      <button
+        onClick={() => setTipAmount(0)}
+        className="mt-4 text-red-500 font-semibold"
+      >
+        Remove Tip
+      </button>
+    )}
+
+  </div>
+)}
+
+         {/* INSTRUCTIONS TAB */}
+{activeTab === "instructions" && (
+
+  <div className="mt-5 overflow-x-auto">
+
+    <div className="flex gap-4 min-w-max">
+
+      {[
+        {
+          emoji: "📞",
+          text: "Avoid Calling",
+        },
+        {
+          emoji: "🚪",
+          text: "Leave at Door",
+        },
+        {
+          emoji: "🔕",
+          text: "Don't Ring Bell",
+        },
+        {
+          emoji: "🥄",
+          text: "Extra Spoons",
+        },
+      ].map((item, index) => (
+
+        <div
+          key={index}
+          onClick={() =>
+            setSelectedInstruction(item.text)
+          }
+          className={`border rounded-2xl p-4 w-32 text-center cursor-pointer transition ${
+            selectedInstruction === item.text
+              ? "border-orange-500 bg-orange-50"
+              : ""
+          }`}
+        >
+
+          <p className="text-3xl mb-2">
+            {item.emoji}
+          </p>
+
+          <p>{item.text}</p>
+
         </div>
+      ))}
+
+    </div>
+
+    {/* SELECTED MESSAGE */}
+    {selectedInstruction && (
+      <p className="mt-4 text-green-600 font-semibold">
+        Selected:
+        {" "}
+        {selectedInstruction}
+      </p>
+    )}
+
+  </div>
+)}
+        </div>
+      </div>
+
+
+
+        {/* BILL DETAILS */}
+<div className="bg-white rounded-2xl p-4 mt-4 shadow-sm">
+
+  <h2 className="font-bold text-lg mb-4">
+    Bill Details
+  </h2>
+
+  <div className="space-y-3">
+
+    <div className="flex justify-between">
+      <p>Item Total</p>
+      <p>₹{totalAmount}</p>
+    </div>
+
+    <div className="flex justify-between">
+      <p>Delivery Fee</p>
+      <p>₹{deliveryFee}</p>
+    </div>
+
+    <div className="flex justify-between">
+      <p>GST & Charges</p>
+      <p>₹{gst}</p>
+    </div>
+
+    <div className="flex justify-between text-green-600 font-bold">
+      <p>Coupon Discount</p>
+      <p>- ₹{discount}</p>
+    </div>
+
+    <hr />
+
+    <div className="flex justify-between font-bold text-lg">
+      <p>To Pay</p>
+      <p>₹{grandTotal}</p>
+    </div>
+
+      <div className="flex justify-between">
+  <p>Delivery Type</p>
+  <p>{selectedDelivery}</p>
+</div>
+
+<div className="flex justify-between">
+  <p>Delivery Tip</p>
+  <p>₹{tipAmount}</p>
+</div>
+
+
+  </div>
+</div>
+
       {/* BOTTOM PAYMENT BAR */}
       {cart.length > 0 && (
-        <div className="fixed bottom-0 left-0 w-full bg-white shadow-2xl border-1 p-1">
+        <div className="fixed bottom-0 left-0 w-full bg-white shadow-2xl border p-3">
 
           <div className="max-w-2xl mx-auto flex justify-between items-center">
 
             <div>
-              <p className="text-sm text-black-500">
+              <p className="text-sm">
                 PAY USING
               </p>
 
@@ -559,7 +638,7 @@ const CartPage = () => {
 
             <button
               onClick={handleOrder}
-              className="bg-green-500 text-white px-8 py-3 rounded-2xl  text-lg hover:bg-green-800"
+              className="bg-green-500 text-white px-8 py-3 rounded-2xl text-lg hover:bg-green-700"
             >
               Pay ₹{grandTotal}
             </button>
@@ -568,11 +647,6 @@ const CartPage = () => {
         </div>
       )}
     </div>
-    </div>
-    
-    
-    </>
-    
   );
 };
 

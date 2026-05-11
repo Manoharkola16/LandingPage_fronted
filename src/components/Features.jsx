@@ -4,7 +4,12 @@ import foods from "../data/FoodsData";
 import categories from "../data/CategoriesFood";
 
 const Features = () => {
-  const { cart, addToCart, removeFromCart } = useCart();
+  const {
+  cart,
+  addToCart,
+  increaseQty,
+  decreaseQty,
+} = useCart();
 
   // Selected category state
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -87,11 +92,11 @@ const Features = () => {
                 <div className="flex items-center gap-3">
 
                   <button
-                    onClick={() => removeFromCart(item)}
-                    className="px-2 py-1 text-black rounded"
-                  >
-                    -
-                  </button>
+                    onClick={() => decreaseQty(item.name)}
+                     className=" text-black w-8 h-8 rounded-full"
+                     >
+                       -
+                    </button>
 
                   <span className="font-semibold">
                     {cartItem?.qty || 0}
