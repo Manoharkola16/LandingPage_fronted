@@ -1,5 +1,5 @@
 import dailyoffer from "../assets/dailyoffer.jpg";
-import bChicken from "../assets/bchicken.jpg";
+import bchicken from "../assets/bchicken.jpg";
 import toprated from "../assets/toprated.jpg";
 import budgetmeals from "../assets/budgetmeals.jpg";
 
