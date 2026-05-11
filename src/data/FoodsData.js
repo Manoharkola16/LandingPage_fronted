@@ -20,16 +20,16 @@ import redberry from "../assets/redberry.png";
 import tropical from "../assets/tropical.png";
 
 import burger from "../assets/burger.webp";
-import paneerburger from "../assets/paneerburger.jpg";
-import cheesyburger from "../assets/cheesyburger.jpg";
-import grillchickenburger from "../assets/grillchickenburger.jpg";
-import chickentikkaburger from "../assets/chickentikkaburger.jpg";
+import paneerburger from "../assets/paneerBurger.jpg";
+import cheesyburger from "../assets/cheesyBurger.jpg";
+import grillchickenburger from "../assets/grillChickenBurger.jpg";
+import chickentikkaburger from "../assets/chickenTikkaBurger.jpg";
 
-import veggrilled from "../assets/veggrilled.jpg";
+import veggrilled from "../assets/vegGrilled.jpg";
 import paneersandwich from "../assets/paneerSandwich.webp";
 import grillchickensandwich from "../assets/grillchickensandwich.png";
 import tandhoorichicken from "../assets/tandhoorichicken.jpg";
-import chickentikkasandwich from "../assets/grillchickensandwich.jpg";
+import chickentikkasandwich from "../assets/grillchickensandwich.png";
 
 import oreo from "../assets/oreo.png";
 import mango from "../assets/mango.png";
@@ -40,7 +40,7 @@ import strawberry from "../assets/strawberry.jpg";
 import apricoit from "../assets/apricoit.webp";
 import mangodelight from "../assets/mangodelight.webp";
 import khubani from "../assets/khubani.jpg";
-import doublekametha from "../assets/doublekametha.webp";
+import doublekametha from "../assets/doubleKaMetha.webp";
 
 const foods = [
   {
