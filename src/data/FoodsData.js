@@ -27,7 +27,7 @@ import chickentikkaburger from "../assets/chickentikkaburger.jpg";
 
 import veggrilled from "../assets/veggrilled.jpg";
 import paneersandwich from "../assets/paneerSandwich.webp";
-import grillchickensandwich from "../assets/grillchickensandwich.jpg";
+import grillchickensandwich from "../assets/grillchickensandwich.png";
 import tandhoorichicken from "../assets/tandhoorichicken.jpg";
 import chickentikkasandwich from "../assets/grillchickensandwich.jpg";
 
@@ -205,28 +205,28 @@ const foods = [
        },
 
     {
-       name: "Paneer Sandwitch",
+       name: "Paneer Sandwich",
         price: 299, 
         category: "Sandwich" 
         , img:paneersandwich
       },
 
     {
-       name: "Chicken Sandwitch", 
+       name: "Chicken Sandwich", 
        price: 349,
         category: "Sandwich",
-         img: chickentikkasandwich
+         img: grillchickensandwich
          },
 
     { 
-      name: "Chicken Tandhori Sandwitch"
+      name: "Chicken Tandhori Sandwich"
       , price: 339, 
       category: "Sandwich",
        img: tandhoorichicken
      },
 
     { 
-      name: "Chicken Tikka sandwitch",
+      name: "Chicken Tikka sandwich",
        price: 299, 
       category: "Sandwich",
        img: chickentikkasandwich
