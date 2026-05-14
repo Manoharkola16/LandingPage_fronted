@@ -7,6 +7,7 @@ import {
   Bike,
   Star,
 } from "lucide-react";
+
 import food from '../assets/food.avif'
 import food2 from '../assets/food2.webp'
 import fastdelivery from '../assets/fastdelivery.avif'
